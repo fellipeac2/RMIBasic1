@@ -34,7 +34,7 @@ public class ClientRun {
             System.out.println("Escreva seu nome:");
             client = new ClientImpl(in.nextLine());
             h.addClient(client);
-            h.sendMessageToAll("HERE IS A HUMAN!");
+            h.sendMessageToAll(client.getNome()+"->"+"HERE IS A HUMAN!");
             String txt;
             do {
                 txt = in.nextLine();
