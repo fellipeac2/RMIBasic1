@@ -25,6 +25,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     @Override
     public boolean addClient(Client client) throws RemoteException {
+        System.out.println("Alguém entrou!");
         return clientes.add(client);
         
     }
