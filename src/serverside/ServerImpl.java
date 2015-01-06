@@ -38,7 +38,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     @Override
     public void sendMessageToAll(String msg) throws RemoteException {
         for (Client cliente : clientes) {
-            cliente.alert(msg);
+            try {
+                cliente.alert(msg);
+            } catch (RemoteException e) {
+                clientes.remove(cliente);
+            }
         }
     }
     

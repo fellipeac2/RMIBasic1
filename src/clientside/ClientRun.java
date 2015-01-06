@@ -28,6 +28,7 @@ public class ClientRun {
         ClientImpl client = null;
         try {
             System.setSecurityManager(new RMISecurityManager());
+            if(LocateRegistry.getRegistry(Registry.REGISTRY_PORT) == null)
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
             h = (Server) Naming.lookup("rmi://192.168.0.7:"+Registry.REGISTRY_PORT+"/server");
             client = new ClientImpl();
@@ -38,6 +39,8 @@ public class ClientRun {
                 txt = in.nextLine();
                 h.sendMessageToAll(txt);
             } while(!txt.equals("exit"));
+            h.removeClient(client);
+            System.exit(0);
         } catch (NotBoundException ex) {
             Logger.getLogger(ClientRun.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
