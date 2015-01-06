@@ -10,6 +10,9 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import serverside.Server;
@@ -20,12 +23,21 @@ import serverside.Server;
  */
 public class ClientRun {
     public static void main(String a[]) {
+        Scanner in = new Scanner(System.in);
         Server h = null;
+        ClientImpl client = null;
         try {
             System.setSecurityManager(new RMISecurityManager());
-            h = (Server) Naming.lookup("rmi://192.168.0.9:1099/server");
-            h.addClient(new ClientImpl());
+            LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
+            h = (Server) Naming.lookup("rmi://192.168.0.7:"+Registry.REGISTRY_PORT+"/server");
+            client = new ClientImpl();
+            h.addClient(client);
             h.sendMessageToAll("HERE IS A HUMAN!");
+            String txt;
+            do {
+                txt = in.nextLine();
+                h.sendMessageToAll(txt);
+            } while(!txt.equals("exit"));
         } catch (NotBoundException ex) {
             Logger.getLogger(ClientRun.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
@@ -33,7 +45,11 @@ public class ClientRun {
         } catch (RemoteException ex) {
             Logger.getLogger(ClientRun.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            
+            try {
+                h.removeClient(client);
+            } catch (RemoteException ex) {
+                Logger.getLogger(ClientRun.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
