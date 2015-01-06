@@ -26,6 +26,7 @@ public class ServerRun {
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
             ServerImpl obj = new ServerImpl();
             Naming.rebind("server", obj);
+            System.out.println("OK!");
         } catch (RemoteException ex) {
             Logger.getLogger(ServerRun.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
