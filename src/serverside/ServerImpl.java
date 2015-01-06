@@ -39,7 +39,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public void sendMessageToAll(String msg) throws RemoteException {
         for (Client cliente : clientes) {
             try {
-                cliente.alert(msg);
+                cliente.alert(cliente.getNome()+"->"+msg);
             } catch (RemoteException e) {
                 clientes.remove(cliente);
             }

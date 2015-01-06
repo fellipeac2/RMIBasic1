@@ -13,14 +13,23 @@ import java.rmi.server.UnicastRemoteObject;
  * @author FELLIPE ADORNO
  */
 public class ClientImpl extends UnicastRemoteObject implements Client {
+    
+    private String nome;
 
-    public ClientImpl() throws RemoteException {
+    public ClientImpl(String nome) throws RemoteException {
        // super();
+        this.nome = nome;
     }
     
     @Override
     public void alert(String msg) throws RemoteException {
         System.out.println(msg);
     }
+
+    @Override
+    public String getNome() throws RemoteException {
+        return this.nome;
+    }
+    
     
 }

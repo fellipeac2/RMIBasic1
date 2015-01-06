@@ -31,7 +31,8 @@ public class ClientRun {
             if(LocateRegistry.getRegistry(Registry.REGISTRY_PORT) == null)
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
             h = (Server) Naming.lookup("rmi://192.168.0.7:"+Registry.REGISTRY_PORT+"/server");
-            client = new ClientImpl();
+            System.out.println("Escreva seu nome:");
+            client = new ClientImpl(in.nextLine());
             h.addClient(client);
             h.sendMessageToAll("HERE IS A HUMAN!");
             String txt;
