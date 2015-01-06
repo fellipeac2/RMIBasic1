@@ -25,7 +25,7 @@ public class ClientRun {
             System.setSecurityManager(new RMISecurityManager());
             h = (Server) Naming.lookup("rmi://192.168.0.9:1099/server");
             h.addClient(new ClientImpl());
-            h.sendMessageToAll("HUMAN!");
+            h.sendMessageToAll("HERE IS A HUMAN!");
         } catch (NotBoundException ex) {
             Logger.getLogger(ClientRun.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
