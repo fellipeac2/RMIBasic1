@@ -12,4 +12,5 @@ package serverside;
 public interface Server extends java.rmi.Remote {
     public boolean addClient(clientside.Client client) throws java.rmi.RemoteException;
     public boolean removeClient(clientside.Client client) throws java.rmi.RemoteException;
+    public void sendMessageToAll(String msg) throws java.rmi.RemoteException;
 }
