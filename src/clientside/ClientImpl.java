@@ -7,6 +7,7 @@ package clientside;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,6 +31,13 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
     public String getNome() throws RemoteException {
         return this.nome;
     }
+
+    @Override
+    public String getMessage() throws RemoteException {
+        return JOptionPane.showInputDialog(null, "Escreva uma mensagem: ");
+    }
+    
+    
     
     
 }

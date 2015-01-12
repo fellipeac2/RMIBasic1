@@ -30,17 +30,17 @@ public class ClientRun {
             System.setSecurityManager(new RMISecurityManager());
             if(LocateRegistry.getRegistry(Registry.REGISTRY_PORT) == null)
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
-            h = (Server) Naming.lookup("rmi://192.168.0.7:"+Registry.REGISTRY_PORT+"/server");
+            h = (Server) Naming.lookup("rmi://192.168.0.9:"+Registry.REGISTRY_PORT+"/server");
             System.out.println("Escreva seu nome:");
             client = new ClientImpl(in.nextLine());
-            h.addClient(client);
+            h.addClient(client.getNome(), client);
             h.sendMessageToAll(client.getNome()+"->"+"HERE IS A HUMAN!");
             String txt;
             do {
                 txt = in.nextLine();
                 h.sendMessageToAll(txt);
             } while(!txt.equals("exit"));
-            h.removeClient(client);
+            h.removeClient(client.getNome(), client);
             System.exit(0);
         } catch (NotBoundException ex) {
             Logger.getLogger(ClientRun.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,7 +50,7 @@ public class ClientRun {
             Logger.getLogger(ClientRun.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                h.removeClient(client);
+                h.removeClient(client.getNome(), client);
             } catch (RemoteException ex) {
                 Logger.getLogger(ClientRun.class.getName()).log(Level.SEVERE, null, ex);
             }

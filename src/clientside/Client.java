@@ -12,4 +12,5 @@ package clientside;
 public interface Client extends java.rmi.Remote {
     public void alert(String msg) throws java.rmi.RemoteException;
     public String getNome() throws java.rmi.RemoteException;
+    public String getMessage() throws java.rmi.RemoteException;
 }

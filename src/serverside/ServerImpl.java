@@ -9,7 +9,9 @@ import clientside.Client;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -17,27 +19,27 @@ import java.util.List;
  */
 public class ServerImpl extends UnicastRemoteObject implements Server {
     
-    private final List<Client> clientes = new ArrayList<>();
+    private final Map<String, Client> clientes = new HashMap<>();
     
     public ServerImpl() throws RemoteException {
         super();
     }
 
     @Override
-    public boolean addClient(Client client) throws RemoteException {
+    public boolean addClient(String nomeId, Client client) throws RemoteException {
         System.out.println("Alguém entrou!");
-        return clientes.add(client);
-        
+        clientes.put(nomeId, client);
+        return true;
     }
 
     @Override
-    public boolean removeClient(Client client) throws RemoteException {
-        return clientes.remove(client);
+    public boolean removeClient(String nomeId, Client client) throws RemoteException {
+        return clientes.remove(nomeId,client);
     }
 
     @Override
     public void sendMessageToAll(String msg) throws RemoteException {
-        for (Client cliente : clientes) {
+        for (Client cliente : clientes.values()) {
             try {
                 cliente.alert(msg);
             } catch (RemoteException e) {
@@ -45,5 +47,16 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             }
         }
     }
+
+    @Override
+    public String receiverMessage(String nomeFrom, String nomeTo) throws RemoteException {
+        Client to = clientes.get(nomeTo);
+        Client from = clientes.get(nomeFrom);
+        if(to == null || from == null)
+            return null;
+        String msg = from.getMessage();
+        return msg;
+    }
+    
     
 }
