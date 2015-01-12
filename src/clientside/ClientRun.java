@@ -38,7 +38,10 @@ public class ClientRun {
             String txt;
             do {
                 txt = in.nextLine();
-                h.sendMessageToAll(txt);
+                if(txt.equals("$"))
+                    System.out.println("RECEIVER:"+h.receiverMessage("fellipe", "ketlin"));
+                else
+                    h.sendMessageToAll(txt);
             } while(!txt.equals("exit"));
             h.removeClient(client.getNome(), client);
             System.exit(0);

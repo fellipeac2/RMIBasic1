@@ -54,7 +54,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         Client from = clientes.get(nomeFrom);
         if(to == null || from == null)
             return null;
-        String msg = from.getMessage();
+        String msg = to.getMessage();
         return msg;
     }
     
