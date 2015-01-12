@@ -34,6 +34,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
     @Override
     public String getMessage() throws RemoteException {
+        System.out.println("Alguém te fez uma pergunta direta: ");
         return JOptionPane.showInputDialog(null, "Escreva uma mensagem: ");
     }
     
